@@ -1,0 +1,81 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Field.gd" type="Script" id=1]
+[ext_resource path="res://pong assets/Line2D.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 683, 5 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 384, 10 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 384, 5 )
+
+[node name="Field" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.117647, 0.117647, 0.117647, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Line2D" type="Line2D" parent="Background"]
+points = PoolVector2Array( 683, 0, 683, 768 )
+width = 5.0
+default_color = Color( 1, 1, 1, 0 )
+script = ExtResource( 2 )
+dash_length = 25
+line_color = Color( 1, 1, 1, 1 )
+space_length = 20
+space_color = Color( 0, 0, 0, 0 )
+
+[node name="Wall" type="StaticBody2D" parent="."]
+position = Vector2( 683, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
+shape = SubResource( 1 )
+
+[node name="Wall2" type="StaticBody2D" parent="."]
+position = Vector2( 683, 768 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2"]
+shape = SubResource( 1 )
+
+[node name="GoalLeft" type="Area2D" parent="."]
+position = Vector2( 0, 384 )
+rotation = 1.5708
+collision_layer = 2
+collision_mask = 2
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GoalLeft"]
+shape = SubResource( 2 )
+
+[node name="GoalRight" type="Area2D" parent="."]
+position = Vector2( 1366, 384 )
+rotation = 1.5708
+collision_layer = 2147483650
+collision_mask = 2
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GoalRight"]
+shape = SubResource( 3 )
+[connection signal="body_entered" from="GoalLeft" to="." method="_on_GoalLeft_body_entered"]
+[connection signal="body_entered" from="GoalRight" to="." method="_on_GoalRight_body_entered"]

@@ -1,0 +1,75 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Ball.gd" type="Script" id=1]
+[ext_resource path="res://pong assets/Ball.png" type="Texture" id=2]
+[ext_resource path="res://pong assets/PongWall.wav" type="AudioStream" id=3]
+[ext_resource path="res://pong assets/PongRacket.wav" type="AudioStream" id=4]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 16.4956
+
+[sub_resource type="Gradient" id=2]
+colors = PoolColorArray( 1, 1, 1, 0, 0.0784314, 0.129412, 0.14902, 1 )
+
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0, 0.622222, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 0.933594, 0.470358, 0.098465, 1, 0.9375, 0.686531, 0.465088, 0 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 150.0
+initial_velocity_random = 1.0
+angular_velocity = 330.0
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 8.0
+scale_random = 0.6
+color_ramp = SubResource( 4 )
+
+[node name="Ball" type="KinematicBody2D"]
+position = Vector2( 669.581, 349.623 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+z_index = 1
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+z_index = 1
+shape = SubResource( 1 )
+
+[node name="RacketSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -10.0
+
+[node name="WallSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+volume_db = -10.0
+
+[node name="Trail" type="Node" parent="."]
+
+[node name="Points" type="Line2D" parent="Trail"]
+width = 15.0
+gradient = SubResource( 2 )
+
+[node name="GoalExplosion" type="Particles2D" parent="."]
+z_index = 1
+emitting = false
+amount = 100
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource( 5 )
+
+[node name="ExplosionTimer" type="Timer" parent="."]
+one_shot = true
+[connection signal="timeout" from="ExplosionTimer" to="." method="_on_ExplosionTimer_timeout"]

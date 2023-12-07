@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/PongRacket.wav-db09a9ace52a72c19969535b28675b6f.sample"
+
+[deps]
+
+source_file="res://pong assets/PongRacket.wav"
+dest_files=[ "res://.import/PongRacket.wav-db09a9ace52a72c19969535b28675b6f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
